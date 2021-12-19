@@ -2,7 +2,8 @@
     session_start();
     require_once "connection.php";
     $user_id = isset($_SESSION['user_id']) ? trim($_SESSION['user_id']) : '';
-    echo "Welcome, " . $user_id ;
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,13 @@
     <title>Document</title>
 </head>
 <body>
-
+    <h1>
+        <?
+            if($user_id !=''){
+                echo "Welcome, " . $user_id ;
+            }
+        ?>
+    </h1>
     <br>
     <a href="login.php">Login</a>
     <br>
@@ -22,7 +29,12 @@
     <br>
     <a href="menu.php">Menu te niya ja</a>
     <br>
-    <a href="logout.php">Logout</a>
+    <?
+            if($user_id !=''){
+                echo "<a href='logout.php'>Logout</a>";
+            }
+        ?>
+    
 
 </body>
 </html>
