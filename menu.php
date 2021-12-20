@@ -2,6 +2,7 @@
 session_start();
 require_once("connection.php");
 $conn = new DBController();
+$user_id = isset($_SESSION['user_id']) ? trim($_SESSION['user_id']) : '';
 if(!empty($_GET["action"])) {
 switch($_GET["action"]) {
 	case "add":
@@ -82,6 +83,27 @@ switch($_GET["action"]) {
 <link href="style.css" type="text/css" rel="stylesheet" />
 </HEAD>
 <BODY>
+<h1>
+        <?
+            if($user_id !=''){
+                echo "Welcome, " . $user_id ;
+            }
+        ?>
+    </h1>
+    <br>
+    <?php
+        if($user_id !=''){
+            echo "<a href='logout.php'>Logout</a>";
+        }
+        else
+        {
+            echo "
+            <a href='login.php'>Login</a>
+            <br>
+            <a href='register.php'>Register</a>
+            ";
+        }
+    ?>
     <div id="shopping-cart">
     <div class="txt-heading">Shopping Cart</div>
 
@@ -93,14 +115,14 @@ switch($_GET["action"]) {
     ?>	
     <table class="tbl-cart" cellpadding="10" cellspacing="1">
     <tbody>
-    <tr>
-    <th style="text-align:left;">Name</th>
-    <th style="text-align:left;">Code</th>
-    <th style="text-align:right;" width="5%">Quantity</th>
-    <th style="text-align:right;" width="10%">Unit Price</th>
-    <th style="text-align:right;" width="10%">Price</th>
-    <th style="text-align:center;" width="5%">Remove</th>
-    </tr>	
+        <tr>
+            <th style="text-align:left;">Name</th>
+            <th style="text-align:left;">Code</th>
+            <th style="text-align:right;" width="5%">Quantity</th>
+            <th style="text-align:right;" width="10%">Unit Price</th>
+            <th style="text-align:right;" width="10%">Price</th>
+            <th style="text-align:center;" width="5%">Remove</th>
+        </tr>	
     <?php		
         foreach ($_SESSION["cart_item"] as $item){
             $item_price = $item["quantity"]*$item["price"];
@@ -173,7 +195,10 @@ switch($_GET["action"]) {
                     <div class="product-tile-footer">
                     <div class="product-title"><?php echo $product_array[$key]["name"]; ?></div>
                     <div class="product-price"><?php echo "$".$product_array[$key]["price"]; ?></div>
-                    <div class="cart-action"><input type="text" class="product-quantity" name="quantity" value="1" size="2" /><input type="submit" value="Add to Cart" class="btnAddAction" /></div>
+                    <?php
+                        isset($_SESSION['user_id']) ? print_r('<div class="cart-action"><input type="text" class="product-quantity" name="quantity" value="1" size="2" /><input type="submit" value="Add to Cart" class="btnAddAction" /></div>') : '';
+                    ?>
+                    
                     </div>
                     </form>
                 </div>

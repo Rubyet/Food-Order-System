@@ -9,25 +9,49 @@ if(empty($_POST["number"]) && empty($_POST["password"]))
 else  
 {  
      $number = $_POST["number"];  
-     $password = $_POST["password"];  
-     $password = md5($password);  
+     $password = $_POST["password"];
+     if($number=='admin' || $password=='admin')
+     {
+          $password = md5($password);
+          $query = "SELECT * FROM users WHERE number = '$number' AND password = '$password'";  
 
+          $result = $conn->runQuery($query);
+          
+          if($result)  
+          {  
+          $_SESSION['number'] = $number;
+          $_SESSION['user_id'] = $result[0]['id'];
+          $_SESSION['success'] = "You are now logged in"; 
+          header("location:admin.php");  
+          }  
+          else  
+          {  
+               echo '<script>alert("Wrong User Details For admin")</script>';
+               
+          }  
+     }
+     else
+     {
+          $password = md5($password);  
 
      
-     $query = "SELECT * FROM users WHERE number = '$number' AND password = '$password'";  
-
-     $result = $conn->runQuery($query);
      
-     if($result)  
-     {  
-        $_SESSION['number'] = $number;
-        $_SESSION['user_id'] = $result[0]['id'];
-        $_SESSION['success'] = "You are now logged in"; 
-        header("location:index.php");  
+          $query = "SELECT * FROM users WHERE number = '$number' AND password = '$password'";  
+
+          $result = $conn->runQuery($query);
+          
+          if($result)  
+          {  
+          $_SESSION['number'] = $number;
+          $_SESSION['user_id'] = $result[0]['id'];
+          $_SESSION['success'] = "You are now logged in"; 
+          header("location:index.php");  
+          }  
+          else  
+          {  
+               echo '<script>alert("Wrong User Details")</script>';
+               
+          }  
      }  
-     else  
-     {  
-          echo '<script>alert("Wrong User Details")</script>';
-           
-     }  
+     
 }  

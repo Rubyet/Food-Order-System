@@ -63,7 +63,7 @@ body {
 }
 
 .product-image {
-	height: 155px;
+	height: 250px;
 	width: 250px;
 	background-color: #FFF;
 }
@@ -122,4 +122,9 @@ body {
 	text-align: center;
 	clear: both;
 	margin: 38px 0px;
+}
+.product-item img {
+    width: 100%;
+    height: 100%;
+	object-fit: cover;
 }

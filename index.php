@@ -16,24 +16,31 @@
 </head>
 <body>
     <h1>
-        <?
+        <?php
             if($user_id !=''){
                 echo "Welcome, " . $user_id ;
             }
         ?>
     </h1>
     <br>
-    <a href="login.php">Login</a>
-    <br>
-    <a href="register.php">Register</a>
+    <?php
+        if($user_id !=''){
+            echo "<a href='account.php'>My account</a><br>";
+            echo "<a href='logout.php'>Logout</a><br>";
+        }
+        else
+        {
+            echo "
+            <a href='login.php'>Login</a>
+            <br>
+            <a href='register.php'>Register</a>
+            ";
+        }
+    ?>
     <br>
     <a href="menu.php">Menu te niya ja</a>
     <br>
-    <?
-            if($user_id !=''){
-                echo "<a href='logout.php'>Logout</a>";
-            }
-        ?>
+    
     
 
 </body>
